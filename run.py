@@ -62,7 +62,7 @@ async def monitor_ur():
                 print(f"\n[{timestamp}] 📢 发现 {len(valid_rooms)} 个可用房源：")
                 print("=" * 80) #稍微拉长分割线
                 
-                result_entry = f"[{timestamp}] 检测到房源: \n------\n"
+                result_entry = f"[{timestamp}] 检测到房源: <br>------<br>"
                 for room in valid_rooms:
                     # ▼▼▼ 在输出中加入租金 ▼▼▼
                     rent_price = room.get('rent', '未知').strip()
@@ -75,7 +75,7 @@ async def monitor_ur():
                     print(output)
                     
                     # 记录日志也加上价格
-                    result_entry += f" {output}\n------\n"
+                    result_entry += f" {output}<br>------<br>"
                 
                 # 写入日志
                 # with open(LOG_FILE, "a", encoding="utf-8") as f:
