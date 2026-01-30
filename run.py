@@ -1,3 +1,4 @@
+import sys
 import asyncio
 import time
 import json
@@ -6,8 +7,15 @@ from crawl4ai.extraction_strategy import JsonCssExtractionStrategy
 
 from notify import send_wechat
 
+if len(sys.argv) < 3:
+    print("[*] 错误：参数不足！")
+    print("使用方法：python run.py [任务名称] [URL地址]")
+    print("示例：python run.py '横滨团地' 'https://www.ur-net.go.jp/...'")
+    sys.exit(1)
+
 # 配置参数
-TARGET_URL = "https://www.ur-net.go.jp/chintai/kanto/kanagawa/40_1750.html"
+TARGET_NAME = sys.argv[1]
+TARGET_URL = sys.argv[2]
 LOG_FILE = "ur_stock.log"
 
 async def monitor_ur():
@@ -62,7 +70,7 @@ async def monitor_ur():
                 print(f"\n[{timestamp}] 📢 发现 {len(valid_rooms)} 个可用房源：")
                 print("=" * 80) #稍微拉长分割线
                 
-                result_entry = f"[{timestamp}] 检测到房源: <br>------<br>"
+                result_entry = f"[{timestamp}] 【{TARGET_NAME}】检测到房源: <br>------<br>"
                 for room in valid_rooms:
                     # ▼▼▼ 在输出中加入租金 ▼▼▼
                     rent_price = room.get('rent', '未知').strip()
